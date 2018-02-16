@@ -1,8 +1,8 @@
 # Site
 title:              ~$ reverseshell
-bio:                'Jekyll version of the Massively theme by HTML5UP'
+bio:                'Jekyll version of the Massively theme by HTML5UP BIO aqio'
 description:        "Jekyll version of the Massively theme by HTML5UP"
-locale:             en_US
+locale:             pt_br
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site
 
@@ -41,9 +41,9 @@ instagram:          default
 github:             default
 
 # personal
-location:           Los Angeles, CA
+location:           São José dos Campos
 phone:              310-318-5555
-email:              info@default.com
+email:              carlos@reverseshell.io
 
 # Gems
 gems:
