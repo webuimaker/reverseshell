@@ -1,10 +1,10 @@
 # Site
 title:              ~$ reverseshell
-bio:                'Jekyll version of the Massively theme by HTML5UP BIO aqio'
-description:        "Jekyll version of the Massively theme by HTML5UP"
+bio:                '[+] Connection established.'
+description:        "Pythons, otimização matemática e segurança digital."
 locale:             pt_br
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site
+url: "http://reverseshell.io" # the base hostname & protocol for your site
 
 defaults:
 - scope:
@@ -31,14 +31,15 @@ sass:
   style:            compressed
 
 # Comments
-disqus_shortname:   default
+disqus_shortname:   reverseshell
+
 
 # Social
 analytics-id:       "default"
-twitter:            default
+twitter:            carlosfab
 facebook:           default
 instagram:          default
-github:             default
+github:             carlosfab
 
 # personal
 location:           São José dos Campos
