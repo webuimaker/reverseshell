@@ -47,5 +47,23 @@ Is the information correct? [Y/n] y
 Com o usuário criado, vamos ver o formato que as informações foram passadas para o arquivo *shadow*.
 <pre>
 <font color="#CC0000"><b>root@localhost</b></font>:<font color="#3465A4"><b>~</b></font># cat /etc/shadow | grep melo
-<b>melo:$6$f/KQjYVZ$s4nSu.O1UTFznXyS1gH0il6ysCzCDIC0g6e.41EixJ3gHvK6mlERBihy9W5T/6btWeyrTRDZWq2YhD6P1Qi5W/:17580:0:99999:7:::</b>
+melo:<b>$6$f/KQjYVZ$s4nSu.O1UTFznXyS1gH0il6ysCzCDIC0g6e.41EixJ3gHvK6mlERBihy9W5T/6btWeyrTRDZWq2YhD6P1Qi5W/</b>:17580:0:99999:7:::
 </pre>
+
+Para criar o script em Python para quebrar esse hash, vamos pegar apenas a parte que está destacada em negrito na linha acima. Para entender essa *string*, é preciso entender que ela é dividida em 3 partes, cada uma com um significado:
+
+1. **Algoritmo de hash:** $6
+2. **Salt:** f/KQjYVZ
+3. **Valor do hash:** s4nSu.O1UTFznXyS1gH0il6ysCzCDIC0g6e.41EixJ3gHvK6mlERBihy9W5T/6btWeyrTRDZWq2YhD6P1Qi5W/
+
+Neste caso, o algoritmo de hash utilizado foi o **SHA-512** (representado por **$6**). Este é o padrão do Linux, e essa informação pode ser achada em `/etc/login.defs`.
+
+<pre><font color="#CC0000"><b>root@localhost</b></font>:<font color="#3465A4"><b>/</b></font># cat /etc/login.defs | grep ENCRYPT_METHOD
+ENCRYPT_METHOD SHA512
+</pre>
+
+Com isso já temos uma informação de entrada para desenvolvermos um script básico de ataque ao hash, baseado em dicionário.
+
+Caso tenha ficado confuso e queira ver um tutorial básico muito interessante, recomendo [este artigo aqui](https://www.vivaolinux.com.br/artigo/Armazenamento-de-senhas-no-Linux?pagina=1)
+
+
