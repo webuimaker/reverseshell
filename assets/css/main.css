@@ -1767,13 +1767,13 @@
 		padding: 0.5rem 0 0.5rem 2rem;
 	}
 
-	code {
-		border: solid 2px;
-		font-family: "Courier New", monospace;
-		font-size: 0.9rem;
-		margin: 0 0.25rem;
-		padding: 0.25rem 0.65rem;
-	}
+	//code {
+	//	border: solid 2px;
+	//	font-family: "Courier New", monospace;
+	//	font-size: 0.9rem;
+	//	margin: 0 0.25rem;
+	//	padding: 0.25rem 0.65rem;
+	//}
 
 	pre {
 		-webkit-overflow-scrolling: touch;
