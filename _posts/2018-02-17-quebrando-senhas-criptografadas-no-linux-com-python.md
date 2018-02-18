@@ -74,13 +74,13 @@ Caso tenha ficado confuso e queira ver um tutorial básico muito interessante, r
 
 O primeiro passo é aprender como gerar um hash SHA-512 em Python. Para isso, vamos utilizar a biblioteca `passlib.hash`. Nele podemos encontrar diversos algoritmos de hash, incluindo o `sha512_crypt`, que é o que queremos.
 
-{% highlight python linenos%}
+{% highlight python %}
 from passlib.hash import sha512_crypt
 {% endhighlight %}
 
 Com o algoritmo importado, vamos definir as variáveis contendo o *salt* e o valor do *hash* que queremos obter.
 
-{% highlight python linenos%}
+{% highlight python %}
 from passlib.hash import sha512_crypt
 
 salt = "f/KQjYVZ"
