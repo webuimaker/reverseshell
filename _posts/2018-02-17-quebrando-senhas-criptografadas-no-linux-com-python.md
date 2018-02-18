@@ -9,9 +9,11 @@ image: "/images/python_bg01.jpg"
 
 ## Como quebrar senhas do Linux usando Python?
 
-Ento, aqui começo o texto...
+Neste primeiro artigo, vamos desenvolver um script simples em Python para efetuar um **ataque de dicionário** em hashes de senhas de Linux.
 
-### Como o Linux armazena as senhas
+Para isso, vamos entender primeiramente como as senhas são armazenadas, e entender o conceito de hash.
+
+### Hash, senha e criptografia
 
 Os conceitos de algoritmos de hash e algortimos de criptografia confundem muitas pessoas. Muitos acreditam que as senhas são criptografadas e armazenadas no computador em algum tipo de arquivo protegido.
 
@@ -22,6 +24,8 @@ Assim, o Linux - e outros SO - simplesmente não armazenam a senha propriamente 
 <pre><font color="#CC0000"><b>carlos@localhost</b></font>:<font color="#3465A4"><b>~</b></font># echo -n "reverseshell" | md5sum
 cab3297daeee59980632ffe85f6dc733  
 </pre>
+
+### Como o Linux armazena as senhas
 
 Em um sistema Linux atual, os hash das senhas de cada usuário estão localizados no arquivo `/etc/shadow`. Para ver como o SO armazena as informações, vamos buscar criar um usuário **melo**, com a senha **teste123** para ver como ela é escrita no sistema.
 
@@ -66,4 +70,19 @@ Com isso já temos uma informação de entrada para desenvolvermos um script bá
 
 Caso tenha ficado confuso e queira ver um tutorial básico muito interessante, recomendo [este artigo aqui](https://www.vivaolinux.com.br/artigo/Armazenamento-de-senhas-no-Linux?pagina=1)
 
+### Gerando hash com o módulo *passlib.hash*
 
+O primeiro passo é aprender como gerar um hash SHA-512 em Python. Para isso, vamos utilizar a biblioteca `passlib.hash`. Nele podemos encontrar diversos algoritmos de hash, incluindo o `sha512_crypt`, que é o que queremos.
+
+```python
+from passlib.hash import sha512_crypt
+```
+
+Com o algoritmo importado, vamos definir as variáveis contendo o *salt* e o valor do *hash* que queremos obter.
+
+```python
+from passlib.hash import sha512_crypt
+
+salt = "f/KQjYVZ"
+hash_esperado = "s4nSu.O1UTFznXyS1gH0il6ysCzCDIC0g6e.41EixJ3gHvK6mlERBihy9W5T/6btWeyrTRDZWq2YhD6P1Qi5W/"
+```
