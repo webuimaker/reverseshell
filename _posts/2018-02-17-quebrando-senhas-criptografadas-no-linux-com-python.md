@@ -127,7 +127,6 @@ from passlib.hash import sha512_crypt
 
 salt = "f/KQjYVZ"
 hash_esperado = "s4nSu.O1UTFznXyS1gH0il6ysCzCDIC0g6e.41EixJ3gHvK6mlERBihy9W5T/6btWeyrTRDZWq2YhD6P1Qi5W/"
-password = "teste123"
 
 def gerar_hash(password, salt):
     ans = sha512_crypt.hash(password, salt=salt, rounds=5000)
