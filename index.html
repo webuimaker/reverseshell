@@ -75,8 +75,23 @@ sobre os assuntos que tenho estudado.</p>
 							</article>
 
 						<!-- Posts -->
+						<section class="last-post">
+								{% for post in site.posts limit:1 %}
+								<article>
+										<header>
+											<span class="date">{{ post.date | date_to_string }}</span>
+											<h2><a href="{{ post.url | absolute_url }}">{{ post.title }}</h2>
+										</header>
+										<a href="{{ post.url | absolute_url }}" class="image fit"><img src="{{ post.image | absolute_url }}" alt="" /></a>
+										<p>{{ post.excerpt }}</p>
+										<ul class="actions">
+											<li><a href="{{ post.url | absolute_url }}" class="button">Ver Mais</a></li>
+										</ul>
+									</article>
+								{% endfor %}
+						</section>
 							<section class="posts">
-                {% for post in site.posts limit:3 %}
+                {% for post in site.posts limit:3 offset:1 %}
                 {% assign mod3 = forloop.index | modulo: 3 %}
   								<article>
   									<header>
