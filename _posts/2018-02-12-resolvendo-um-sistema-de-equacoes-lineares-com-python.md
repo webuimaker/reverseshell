@@ -131,4 +131,6 @@ x =  [ 1.]
 y =  [ 5.]
 {% endhighlight %}
 
-E foi isso então, um breve artigo para entender como resolver um sistema de equações lineares e ver como podemos resolvê-lo com pocas linhas de códigos.
+E foi isso então, um breve artigo para entender como resolver um sistema de equações lineares e ver como podemos resolvê-lo com poucas linhas de códigos.
+Caso queira ver o arquivo em Jupyter Notebook deste artigo, é só entrar no [meu GitHub](https://github.com/carlosfab/reverseshell_posts/blob/master/Sistemas_Lineares_com_Python.ipynb). Abraços!
+
